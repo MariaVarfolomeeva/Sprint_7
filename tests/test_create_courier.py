@@ -1,6 +1,7 @@
 import pytest
 import requests
 from utils.courier import register_new_courier_and_return_login_password
+from utils.data import ERROR_MESSAGES, SUCCESS_RESPONSES
 
 
 class TestCreateCourier:
@@ -21,7 +22,8 @@ class TestCreateCourier:
 
         assert response.status_code == 201, f"Ожидался код 201, но получен {response.status_code}"
 
-        assert response.json() == {"ok": True}, f"Ожидался ответ {{'ok': True}}, но получен {response.json()}"
+        assert response.json() == SUCCESS_RESPONSES["create_courier"], \
+            f"Ожидался ответ {SUCCESS_RESPONSES['create_courier']}, но получен {response.json()}"
 
     def test_create_courier_duplicate(self):
         """
@@ -37,8 +39,8 @@ class TestCreateCourier:
 
         assert response.status_code == 409, f"Ожидался код 409, но получен {response.status_code}"
 
-        assert response.json()["message"] == "Этот логин уже используется", \
-            f"Ожидалось сообщение 'Этот логин уже используется', но получено {response.json()['message']}"
+        assert response.json()["message"] == ERROR_MESSAGES["duplicate_login"], \
+            f"Ожидалось сообщение '{ERROR_MESSAGES['duplicate_login']}', но получено {response.json()['message']}"
 
     @pytest.mark.parametrize("missing_field", ["login", "password", "firstName"])
     def test_create_courier_missing_field(self, missing_field):
@@ -55,5 +57,5 @@ class TestCreateCourier:
 
         assert response.status_code == 400, f"Ожидался код 400, но получен {response.status_code}"
 
-        assert response.json()["message"] == "Недостаточно данных для создания учетной записи", \
-            f"Ожидалось сообщение 'Недостаточно данных для создания учетной записи', но получено {response.json()['message']}"
+        assert response.json()["message"] == ERROR_MESSAGES["missing_field"], \
+            f"Ожидалось сообщение '{ERROR_MESSAGES['missing_field']}', но получено {response.json()['message']}"
