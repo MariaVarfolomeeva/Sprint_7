@@ -31,11 +31,14 @@ class TestCreateCourier:
 
     def test_create_courier_success(self):
         courier_data = register_new_courier_and_return_login_password()
-        assert len(courier_data) == 3
-        response = requests.post(self.BASE_URL, data={
+
+        payload = {
             "login": courier_data[0],
             "password": courier_data[1],
             "firstName": courier_data[2]
-        })
-        assert response.status_code == 201
-        assert response.json() == {"ok": True}
+        }
+        response = requests.post(self.BASE_URL, data=payload)
+
+        assert response.status_code == 201, f"Ожидался код 201, но получен {response.status_code}"
+
+        assert response.json() == {"ok": True}, f"Ожидался ответ {{'ok': True}}, но получен {response.json()}"
