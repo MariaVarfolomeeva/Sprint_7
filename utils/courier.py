@@ -1,16 +1,5 @@
 import requests
-import random
-import string
-
-
-def generate_random_string(length):
-    """
-    Генерирует случайную строку из букв нижнего регистра.
-    :param length: Длина строки.
-    :return: Случайная строка.
-    """
-    letters = string.ascii_lowercase
-    return ''.join(random.choice(letters) for _ in range(length))
+from utils.generators import generate_random_string
 
 
 def register_new_courier_and_return_login_password():
