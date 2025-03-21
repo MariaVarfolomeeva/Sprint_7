@@ -5,11 +5,14 @@ from utils.courier import register_new_courier_and_return_login_password
 from utils.data import ERROR_MESSAGES, SUCCESS_RESPONSES
 
 
-class TestCreateCourier:
-    BASE_URL = "https://qa-scooter.praktikum-services.ru/api/v1/courier"
+# Выносим BASE_URL на уровень модуля
+BASE_URL = "https://qa-scooter.praktikum-services.ru/api/v1/courier"
 
-    class TestCreateCourier:
-        BASE_URL = "https://qa-scooter.praktikum-services.ru/api/v1/courier"
+
+class TestCreateCourier:
+    """
+    Тесты для проверки функциональности создания курьера.
+    """
 
     @pytest.mark.parametrize("missing_field", ["login", "password", "firstName"])
     @allure.title("Проверка создания курьера без обязательного поля: {missing_field}")
@@ -26,10 +29,9 @@ class TestCreateCourier:
 
         payload.pop(missing_field)
 
-        response = requests.post(self.BASE_URL, data=payload)
+        response = requests.post(BASE_URL, data=payload)
 
         assert response.status_code == 400, f"Ожидался код 400, но получен {response.status_code}"
-
         assert response.json()["message"] == ERROR_MESSAGES["missing_field"], \
             f"Ожидалось сообщение '{ERROR_MESSAGES['missing_field']}', но получено {response.json()['message']}"
 
@@ -44,10 +46,9 @@ class TestCreateCourier:
             "password": courier_data[1],
             "firstName": courier_data[2]
         }
-        response = requests.post(self.BASE_URL, data=payload)
+        response = requests.post(BASE_URL, data=payload)
 
         assert response.status_code == 201, f"Ожидался код 201, но получен {response.status_code}"
-
         assert response.json() == SUCCESS_RESPONSES["create_courier"], \
             f"Ожидался ответ {SUCCESS_RESPONSES['create_courier']}, но получен {response.json()}"
 
@@ -61,10 +62,9 @@ class TestCreateCourier:
             "password": courier_data[1],
             "firstName": courier_data[2]
         }
-        response = requests.post(self.BASE_URL, data=payload)
+        response = requests.post(BASE_URL, data=payload)
 
         assert response.status_code == 409, f"Ожидался код 409, но получен {response.status_code}"
-
         assert response.json()["message"] == ERROR_MESSAGES["duplicate_login"], \
             f"Ожидалось сообщение '{ERROR_MESSAGES['duplicate_login']}', но получено {response.json()['message']}"
 
