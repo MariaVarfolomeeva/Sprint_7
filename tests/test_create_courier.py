@@ -3,10 +3,7 @@ import requests
 import allure
 from utils.courier import register_new_courier_and_return_login_password
 from utils.data import ERROR_MESSAGES, SUCCESS_RESPONSES
-
-
-# Выносим BASE_URL на уровень модуля
-BASE_URL = "https://qa-scooter.praktikum-services.ru/api/v1/courier"
+from utils.urls import Urls
 
 
 class TestCreateCourier:
@@ -29,7 +26,7 @@ class TestCreateCourier:
 
         payload.pop(missing_field)
 
-        response = requests.post(BASE_URL, data=payload)
+        response = requests.post(Urls.COURIER_URL, data=payload)
 
         assert response.status_code == 400, f"Ожидался код 400, но получен {response.status_code}"
         assert response.json()["message"] == ERROR_MESSAGES["missing_field"], \
@@ -46,7 +43,7 @@ class TestCreateCourier:
             "password": courier_data[1],
             "firstName": courier_data[2]
         }
-        response = requests.post(BASE_URL, data=payload)
+        response = requests.post(Urls.COURIER_URL, data=payload)
 
         assert response.status_code == 201, f"Ожидался код 201, но получен {response.status_code}"
         assert response.json() == SUCCESS_RESPONSES["create_courier"], \
@@ -62,26 +59,8 @@ class TestCreateCourier:
             "password": courier_data[1],
             "firstName": courier_data[2]
         }
-        response = requests.post(BASE_URL, data=payload)
+        response = requests.post(Urls.COURIER_URL, data=payload)
 
         assert response.status_code == 409, f"Ожидался код 409, но получен {response.status_code}"
         assert response.json()["message"] == ERROR_MESSAGES["duplicate_login"], \
             f"Ожидалось сообщение '{ERROR_MESSAGES['duplicate_login']}', но получено {response.json()['message']}"
-
-    @pytest.mark.parametrize("missing_field", ["login", "password", "firstName"])
-    def test_create_courier_missing_field(self, missing_field):
-        """
-        Негативный сценарий: попытка создать курьера без обязательного поля.
-        """
-        payload = {
-            "login": "test_login",
-            "password": "test_password",
-            "firstName": "test_first_name"
-        }
-        payload.pop(missing_field)
-        response = requests.post(self.BASE_URL, data=payload)
-
-        assert response.status_code == 400, f"Ожидался код 400, но получен {response.status_code}"
-
-        assert response.json()["message"] == ERROR_MESSAGES["missing_field"], \
-            f"Ожидалось сообщение '{ERROR_MESSAGES['missing_field']}', но получено {response.json()['message']}"

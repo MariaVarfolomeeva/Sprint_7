@@ -4,7 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f35b3f98-662b-4fc4-bf37-23fe19432b75" name="Changes" comment="" />
+    <list default="true" id="f35b3f98-662b-4fc4-bf37-23fe19432b75" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/utils/ugls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/conftest.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/conftest.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_create_courier.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_create_courier.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_create_order.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_create_order.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_get_orders.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_get_orders.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_login_courier.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_login_courier.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
